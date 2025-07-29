@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Servicios de trámites de tránsito - Asesoría personalizada para licencias, matrículas, comparendos y más">
+    <meta name="keywords" content="trámites tránsito, licencia conducir, matrícula vehículo, comparendos, revisión técnica">
+    <meta name="author" content="TramitarCS">
+    
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="TramitarCS - Trámites de Tránsito">
+    <meta property="og:description" content="Asesoría personalizada para todos tus trámites de tránsito">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tramitarcs.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <title>TramitarCS - Trámites de Tránsito Fáciles y Rápidos</title>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1>TramitarCS</h1>
+                    <span>Trámites de Tránsito</span>
+                </div>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#inicio" class="nav-link">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#servicios" class="nav-link">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#nosotros" class="nav-link">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#contacto" class="nav-link">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="nav-toggle-icon"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Resuelve tus <span class="highlight">Trámites de Tránsito</span> 
+                    de forma fácil y rápida
+                </h1>
+                <p class="hero-description">
+                    Te ayudamos con todos tus trámites vehiculares. Asesoría personalizada 
+                    vía WhatsApp para licencias, matrículas, comparendos y más.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#servicios" class="btn btn-primary">
+                        <i class="fas fa-car"></i>
+                        Ver Servicios
+                    </a>
+                    <a href="https://wa.me/573117506892?text=Hola, necesito asesoría para trámites de tránsito" 
+                       class="btn btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Asesoría WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="assets/hero-traffic.svg" alt="Trámites de Tránsito" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- Espacio para Google AdSense -->
+    <div class="ad-banner ad-banner-top">
+        <!-- Aquí irá el código de AdSense -->
+        <div class="ad-placeholder">Espacio publicitario</div>
+    </div>
+
+    <!-- Servicios Section -->
+    <section id="servicios" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <p class="section-description">
+                    Ofrecemos asesoría completa para todos tus trámites de tránsito
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Licencia de Conducir -->
+                <div class="service-card" data-service="licencia">
+                    <div class="service-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3 class="service-title">Licencia de Conducir</h3>
+                    <p class="service-description">
+                        Tramita tu licencia nueva, renovación o recategorización. 
+                        Te guiamos en todo el proceso.
+                    </p>
+                    <ul class="service-features">
+                        <li>Licencia nueva</li>
+                        <li>Renovación</li>
+                        <li>Recategorización</li>
+                        <li>Duplicado</li>
+                    </ul>
+                    <button class="btn btn-service" onclick="contactWhatsApp('licencia')">
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar Asesoría
+                    </button>
+                </div>
+
+                <!-- Matrícula de Vehículo -->
+                <div class="service-card" data-service="matricula">
+                    <div class="service-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="service-title">Matrícula de Vehículo</h3>
+                    <p class="service-description">
+                        Matricula tu vehículo nuevo o usado. Proceso completo 
+                        con todos los documentos necesarios.
+                    </p>
+                    <ul class="service-features">
+                        <li>Vehículos nuevos</li>
+                        <li>Vehículos usados</li>
+                        <li>Traspaso</li>
+                        <li>Cambio de ciudad</li>
+                    </ul>
+                    <button class="btn btn-service" onclick="contactWhatsApp('matricula')">
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar Asesoría
+                    </button>
+                </div>
+
+                <!-- Comparendos -->
+                <div class="service-card" data-service="comparendos">
+                    <div class="service-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="service-title">Comparendos</h3>
+                    <p class="service-description">
+                        Resuelve tus multas de tránsito de manera efectiva. 
+                        Conoce tus opciones y evita sanciones mayores.
+                    </p>
+                    <ul class="service-features">
+                        <li>Consulta de multas</li>
+                        <li>Descuentos disponibles</li>
+                        <li>Recursos de apelación</li>
+                        <li>Cursos pedagógicos</li>
+                    </ul>
+                    <button class="btn btn-service" onclick="contactWhatsApp('comparendos')">
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar Asesoría
+                    </button>
+                </div>
+
+                <!-- Revisión Técnica -->
+                <div class="service-card" data-service="revision">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="service-title">Revisión Técnica</h3>
+                    <p class="service-description">
+                        Programa tu revisión técnicomecanica y de gases. 
+                        Te ayudamos a encontrar el mejor centro.
+                    </p>
+                    <ul class="service-features">
+                        <li>Revisión técnicomecanica</li>
+                        <li>Revisión de gases</li>
+                        <li>Centros autorizados</li>
+                        <li>Citas disponibles</li>
+                    </ul>
+                    <button class="btn btn-service" onclick="contactWhatsApp('revision')">
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar Asesoría
+                    </button>
+                </div>
+
+                <!-- SOAT -->
+                <div class="service-card" data-service="soat">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="service-title">SOAT</h3>
+                    <p class="service-description">
+                        Adquiere tu SOAT de manera rápida y segura. 
+                        Comparamos precios entre aseguradoras.
+                    </p>
+                    <ul class="service-features">
+                        <li>Mejores precios</li>
+                        <li>Múltiples aseguradoras</li>
+                        <li>Entrega inmediata</li>
+                        <li>Renovación automática</li>
+                    </ul>
+                    <button class="btn btn-service" onclick="contactWhatsApp('soat')">
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar Asesoría
+                    </button>
+                </div>
+
+                <!-- Otros Trámites -->
+                <div class="service-card" data-service="otros">
+                    <div class="service-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3 class="service-title">Otros Trámites</h3>
+                    <p class="service-description">
+                        ¿Necesitas ayuda con otro trámite? Contáctanos y 
+                        te asesoramos con cualquier gestión vehicular.
+                    </p>
+                    <ul class="service-features">
+                        <li>Tarjeta de propiedad</li>
+                        <li>Blindaje vehicular</li>
+                        <li>Importación</li>
+                        <li>Consultoría personalizada</li>
+                    </ul>
+                    <button class="btn btn-service" onclick="contactWhatsApp('otros')">
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar Asesoría
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Espacio para Google AdSense -->
+    <div class="ad-banner ad-banner-middle">
+        <div class="ad-placeholder">Espacio publicitario</div>
+    </div>
+
+    <!-- Por qué elegirnos -->
+    <section class="why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">¿Por qué elegirnos?</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Atención Inmediata</h3>
+                    <p>Respuesta rápida vía WhatsApp en horario laboral</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Expertos Certificados</h3>
+                    <p>Profesionales con amplia experiencia en trámites</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Precios Competitivos</h3>
+                    <p>Tarifas justas y transparentes sin costos ocultos</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Gestión Completa</h3>
+                    <p>Nos encargamos de todo el proceso de principio a fin</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contáctanos</h2>
+                <p class="section-description">
+                    Estamos aquí para ayudarte con todos tus trámites
+                </p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp</h3>
+                    <p>Asesoría inmediata</p>
+                    <a href="https://wa.me/573117506892" class="contact-link" target="_blank">
+                        +57 311 750 6892
+                    </a>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>Consultas generales</p>
+                    <a href="mailto:info@tramitarcs.com" class="contact-link">
+                        info@tramitarcs.com
+                    </a>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Horarios</h3>
+                    <p>Lunes a Viernes</p>
+                    <span class="contact-link">8:00 AM - 6:00 PM</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TramitarCS</h3>
+                    <p>Tu aliado en trámites de tránsito. Facilitamos todos tus procesos vehiculares con asesoría personalizada.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="#servicios">Licencia de Conducir</a></li>
+                        <li><a href="#servicios">Matrícula de Vehículo</a></li>
+                        <li><a href="#servicios">Comparendos</a></li>
+                        <li><a href="#servicios">Revisión Técnica</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li>
+                            <i class="fab fa-whatsapp"></i>
+                            <a href="https://wa.me/573117506892" target="_blank">+57 311 750 6892</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:info@tramitarcs.com">info@tramitarcs.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TramitarCS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/573117506892?text=Hola, necesito información sobre trámites de tránsito" 
+           target="_blank" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
