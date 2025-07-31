@@ -524,6 +524,16 @@ button {
     z-index: 2;
 }
 
+/* Asegurar que los enlaces de servicio funcionen correctamente */
+a.btn-service {
+    display: inline-flex;
+    text-decoration: none;
+}
+
+a.btn-service:hover {
+    text-decoration: none;
+}
+
 /* Espacios publicitarios */
 .ad-banner {
     max-width: 1200px;
