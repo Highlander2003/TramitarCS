@@ -33,6 +33,9 @@ function initializeApp() {
     setupContactButtons();
     setupBusinessHoursCheck();
     setupAnalytics();
+    setupThemeDetector();
+    enhanceButtonEffects();
+    enhanceWhatsAppFloat();
     console.log('TramitarCS - Aplicación inicializada correctamente');
 }
 
@@ -82,6 +85,13 @@ function setupNavigation() {
     // Cerrar menú al hacer clic fuera
     document.addEventListener('click', function(e) {
         if (isMenuOpen && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+            toggleMobileMenu();
+        }
+    });
+
+    // Cerrar menú con tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isMenuOpen) {
             toggleMobileMenu();
         }
     });
@@ -210,27 +220,54 @@ function setupServiceCards() {
     const serviceCards = document.querySelectorAll('.service-card');
     
     serviceCards.forEach(card => {
-        // Efecto hover mejorado
+        // Efecto hover mejorado con rotación suave
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px) scale(1.02)';
+            this.style.transform = 'translateY(-10px) scale(1.02) rotateX(2deg)';
+            
+            // Efecto de brillo en el icono
+            const icon = this.querySelector('.service-icon');
+            if (icon) {
+                icon.style.transform = 'rotate(5deg) scale(1.1)';
+                icon.style.background = 'linear-gradient(135deg, #1d4ed8, #1e40af)';
+            }
         });
         
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
+            this.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+            
+            // Restaurar icono
+            const icon = this.querySelector('.service-icon');
+            if (icon) {
+                icon.style.transform = 'rotate(0deg) scale(1)';
+                icon.style.background = 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))';
+            }
         });
         
-        // Efecto de clic
+        // Efecto de clic con animación de ondas
+        card.addEventListener('mousedown', function(e) {
+            // Crear efecto de ondas en el punto de clic
+            createRippleEffect(this, e);
+            
+            // Animación de presión
+            this.style.transform = 'translateY(-8px) scale(0.98)';
+            
+            setTimeout(() => {
+                if (this.matches(':hover')) {
+                    this.style.transform = 'translateY(-10px) scale(1.02) rotateX(2deg)';
+                } else {
+                    this.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+                }
+            }, 150);
+        });
+        
+        // Tracking de analytics mejorado
         card.addEventListener('click', function() {
             const serviceType = this.getAttribute('data-service');
             if (serviceType) {
-                // Animación de clic
-                this.style.transform = 'translateY(-8px) scale(0.98)';
-                setTimeout(() => {
-                    this.style.transform = 'translateY(-8px) scale(1.02)';
-                }, 150);
-                
-                // Tracking de analytics
                 trackServiceClick(serviceType);
+                
+                // Efecto visual de confirmación
+                showClickFeedback(this);
             }
         });
     });
@@ -395,8 +432,171 @@ function trackWhatsAppClick(serviceType) {
     console.log(`WhatsApp contactado para: ${serviceType}`);
 }
 
-// Utilidades adicionales
-function debounce(func, wait) {
+// Crear efecto de ondas (ripple) en botones y tarjetas
+function createRippleEffect(element, event) {
+    const ripple = document.createElement('div');
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: scale(0);
+        pointer-events: none;
+        z-index: 10;
+    `;
+    
+    // Asegurar que el elemento padre tenga position relative
+    const originalPosition = element.style.position;
+    if (!originalPosition || originalPosition === 'static') {
+        element.style.position = 'relative';
+    }
+    
+    element.appendChild(ripple);
+    
+    // Animar la onda
+    ripple.animate([
+        { transform: 'scale(0)', opacity: 1 },
+        { transform: 'scale(2)', opacity: 0 }
+    ], {
+        duration: 600,
+        easing: 'ease-out'
+    }).onfinish = () => {
+        ripple.remove();
+    };
+}
+
+// Feedback visual para clics
+function showClickFeedback(element) {
+    const feedback = document.createElement('div');
+    feedback.style.cssText = `
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--whatsapp-color);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.3s ease;
+        pointer-events: none;
+        z-index: 20;
+    `;
+    feedback.textContent = '✓ Clic';
+    
+    element.style.position = 'relative';
+    element.appendChild(feedback);
+    
+    // Animar aparición
+    setTimeout(() => {
+        feedback.style.opacity = '1';
+        feedback.style.transform = 'scale(1)';
+    }, 50);
+    
+    // Animar desaparición
+    setTimeout(() => {
+        feedback.style.opacity = '0';
+        feedback.style.transform = 'scale(0.8)';
+        setTimeout(() => feedback.remove(), 300);
+    }, 1500);
+}
+
+// Mejorar efectos de botones
+function enhanceButtonEffects() {
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+        // Efecto de hover con transformación suave
+        button.addEventListener('mouseenter', function() {
+            if (this.classList.contains('btn-primary')) {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+                this.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.4)';
+            } else if (this.classList.contains('btn-whatsapp')) {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+                this.style.boxShadow = '0 8px 25px rgba(37, 211, 102, 0.4)';
+            }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            if (this.classList.contains('btn-primary')) {
+                this.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.3)';
+            } else if (this.classList.contains('btn-whatsapp')) {
+                this.style.boxShadow = '0 4px 15px rgba(37, 211, 102, 0.3)';
+            }
+        });
+        
+        // Efecto de clic
+        button.addEventListener('mousedown', function(e) {
+            createRippleEffect(this, e);
+            this.style.transform = 'translateY(-1px) scale(1.02)';
+        });
+        
+        button.addEventListener('mouseup', function() {
+            if (this.matches(':hover')) {
+                if (this.classList.contains('btn-primary') || this.classList.contains('btn-whatsapp')) {
+                    this.style.transform = 'translateY(-3px) scale(1.05)';
+                }
+            } else {
+                this.style.transform = 'translateY(0) scale(1)';
+            }
+        });
+    });
+}
+
+// Función para el botón flotante de WhatsApp con efectos especiales
+function enhanceWhatsAppFloat() {
+    const whatsappFloat = document.querySelector('.whatsapp-btn');
+    if (!whatsappFloat) return;
+    
+    // Efecto de pulsación inteligente
+    let pulseInterval;
+    let isHovered = false;
+    
+    function startSmartPulse() {
+        if (isHovered) return;
+        
+        pulseInterval = setInterval(() => {
+            if (isHovered) return;
+            
+            whatsappFloat.style.animation = 'none';
+            whatsappFloat.offsetHeight; // Trigger reflow
+            whatsappFloat.style.animation = 'float-whatsapp 3s ease-in-out infinite';
+        }, 8000);
+    }
+    
+    whatsappFloat.addEventListener('mouseenter', function() {
+        isHovered = true;
+        clearInterval(pulseInterval);
+        this.style.animation = 'none';
+    });
+    
+    whatsappFloat.addEventListener('mouseleave', function() {
+        isHovered = false;
+        startSmartPulse();
+    });
+    
+    // Efecto especial cada 30 segundos para llamar la atención
+    setInterval(() => {
+        if (!isHovered && !document.hidden) {
+            whatsappFloat.style.animation = 'none';
+            whatsappFloat.offsetHeight;
+            whatsappFloat.style.animation = 'float-whatsapp 1s ease-in-out 3, float-whatsapp 3s ease-in-out infinite 3s';
+        }
+    }, 30000);
+    
+    startSmartPulse();
+}
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
@@ -406,7 +606,7 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
     };
-}
+
 
 function throttle(func, limit) {
     let inThrottle;
@@ -458,6 +658,66 @@ function setupLazyLoading() {
             imageObserver.observe(img);
         });
     }
+}
+
+// Configuración del detector de tema
+function setupThemeDetector() {
+    // Detectar preferencia inicial del tema
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Función para aplicar el tema
+    function applyTheme(isDark) {
+        const body = document.body;
+        
+        if (isDark) {
+            body.classList.add('dark-theme');
+            console.log('Tema oscuro activado');
+        } else {
+            body.classList.remove('dark-theme');
+            console.log('Tema claro activado');
+        }
+        
+        // Actualizar metaetiqueta para la barra de estado en móviles
+        updateThemeColor(isDark);
+    }
+    
+    // Función para actualizar el color de la barra de estado
+    function updateThemeColor(isDark) {
+        let themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        
+        if (!themeColorMeta) {
+            themeColorMeta = document.createElement('meta');
+            themeColorMeta.name = 'theme-color';
+            document.head.appendChild(themeColorMeta);
+        }
+        
+        // Cambiar color de la barra de estado según el tema
+        themeColorMeta.content = isDark ? '#111827' : '#ffffff';
+    }
+    
+    // Aplicar tema inicial
+    applyTheme(prefersDarkScheme.matches);
+    
+    // Escuchar cambios en la preferencia del tema
+    prefersDarkScheme.addEventListener('change', function(e) {
+        applyTheme(e.matches);
+        
+        // Tracking del cambio de tema
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'theme_change', {
+                event_category: 'UI',
+                event_label: e.matches ? 'dark' : 'light',
+                value: 1
+            });
+        }
+    });
+    
+    // Función para obtener el tema actual
+    window.getCurrentTheme = function() {
+        return prefersDarkScheme.matches ? 'dark' : 'light';
+    };
+    
+    console.log('Detector de tema configurado. Tema actual:', getCurrentTheme());
 }
 
 // Manejo de errores global

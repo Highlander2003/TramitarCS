@@ -10,7 +10,7 @@ const SITE_CONFIG = {
         
         // CONTACTO
         whatsapp: "573117506892", // Número de WhatsApp actualizado
-        email: "info@tramitarcs.com",
+        email: "tramitarcs91@gmail.com",
         website: "https://tramitarcs.com",
         
         // HORARIOS

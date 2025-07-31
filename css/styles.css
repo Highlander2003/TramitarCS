@@ -7,12 +7,12 @@
     --accent-color: #f59e0b;
     --whatsapp-color: #25d366;
     
-    /* Colores de texto */
+    /* Colores de texto - Modo claro */
     --text-primary: #1f2937;
     --text-secondary: #6b7280;
     --text-light: #9ca3af;
     
-    /* Colores de fondo */
+    /* Colores de fondo - Modo claro */
     --bg-primary: #ffffff;
     --bg-secondary: #f9fafb;
     --bg-accent: #f3f4f6;
@@ -55,6 +55,27 @@
     --transition-slow: 0.5s ease-in-out;
 }
 
+/* Variables para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Colores de texto - Modo oscuro */
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --text-light: #9ca3af;
+        
+        /* Colores de fondo - Modo oscuro */
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --bg-accent: #374151;
+        
+        /* Sombras más sutiles en modo oscuro */
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+    }
+}
+
 /* Reset básico */
 * {
     margin: 0;
@@ -69,6 +90,35 @@ body {
     color: var(--text-primary);
     background-color: var(--bg-primary);
     overflow-x: hidden;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Modo oscuro - Ajustes adicionales */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--bg-primary);
+    }
+    
+    /* Mejorar contraste para enlaces */
+    .contact-link {
+        color: #60a5fa;
+    }
+    
+    .contact-link:hover {
+        color: #3b82f6;
+    }
+    
+    /* Ajustar placeholders de anuncios */
+    .ad-placeholder {
+        background: var(--bg-accent);
+        border-color: var(--text-light);
+        color: var(--text-secondary);
+    }
+    
+    /* Mejorar visibilidad de los separadores */
+    .nav-item:nth-last-child(2)::after {
+        background: var(--bg-accent);
+    }
 }
 
 html {
@@ -122,6 +172,20 @@ button {
     transition: var(--transition-normal);
 }
 
+/* Modo oscuro para header */
+@media (prefers-color-scheme: dark) {
+    .header {
+        background: rgba(17, 24, 39, 0.95);
+        border-bottom: 1px solid var(--bg-accent);
+    }
+    
+    .nav-toggle-icon,
+    .nav-toggle-icon::before,
+    .nav-toggle-icon::after {
+        background: var(--text-primary);
+    }
+}
+
 .nav {
     padding: var(--spacing-md) 0;
 }
@@ -150,7 +214,30 @@ button {
 
 .nav-list {
     display: flex;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Separador visual entre enlaces y botones */
+.nav-item:nth-last-child(2) {
+    margin-right: var(--spacing-md);
+    position: relative;
+}
+
+.nav-item:nth-last-child(2)::after {
+    content: '';
+    position: absolute;
+    right: -var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 24px;
+    background: var(--bg-accent);
 }
 
 .nav-link {
@@ -214,11 +301,33 @@ button {
     top: 8px;
 }
 
+/* Animación del menú hamburguesa */
+.nav-toggle.active .nav-toggle-icon {
+    background: transparent;
+}
+
+.nav-toggle.active .nav-toggle-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.nav-toggle.active .nav-toggle-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
 /* Hero Section */
 .hero {
     padding: calc(80px + var(--spacing-3xl)) 0 var(--spacing-3xl);
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
     overflow: hidden;
+}
+
+/* Modo oscuro para hero */
+@media (prefers-color-scheme: dark) {
+    .hero {
+        background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    }
 }
 
 .hero-container {
@@ -253,12 +362,32 @@ button {
 
 .hero-image {
     text-align: center;
+    position: relative;
 }
 
 .hero-image img {
-    max-width: 500px;
+    max-width: 600px;
+    width: 100%;
     height: auto;
     filter: drop-shadow(var(--shadow-lg));
+    transition: transform 0.3s ease;
+}
+
+.hero-image img:hover {
+    transform: scale(1.02);
+}
+
+/* Responsive para la imagen del hero */
+@media (max-width: 768px) {
+    .hero-image img {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-image img {
+        max-width: 350px;
+    }
 }
 
 /* Botones */
@@ -270,32 +399,85 @@ button {
     border-radius: var(--border-radius-lg);
     font-weight: 500;
     font-size: var(--font-size-base);
-    transition: var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     text-align: center;
     border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Efecto de ondas para botones */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: 1;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn > *,
+.btn .fas,
+.btn .fab {
+    position: relative;
+    z-index: 2;
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 
 .btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--primary-dark), #1e40af);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 
 .btn-whatsapp {
-    background: var(--whatsapp-color);
+    background: linear-gradient(135deg, var(--whatsapp-color), #22c55e);
     color: white;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    animation: pulse-whatsapp 2s infinite;
 }
 
 .btn-whatsapp:hover {
-    background: #22c55e;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    animation: none;
+}
+
+.btn-whatsapp:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+@keyframes pulse-whatsapp {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+    }
 }
 
 .btn-service {
@@ -304,12 +486,42 @@ button {
     border: 2px solid var(--primary-color);
     width: 100%;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-service::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    transition: left 0.3s ease;
+    z-index: 1;
+}
+
+.btn-service:hover::after {
+    left: 0;
 }
 
 .btn-service:hover {
-    background: var(--primary-color);
     color: white;
+    border-color: var(--primary-dark);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25);
+}
+
+.btn-service:active {
+    transform: translateY(0);
+}
+
+.btn-service > *,
+.btn-service .fas,
+.btn-service .fab {
+    position: relative;
+    z-index: 2;
 }
 
 /* Espacios publicitarios */
@@ -373,14 +585,50 @@ button {
     border-radius: var(--border-radius-xl);
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-md);
-    transition: var(--transition-normal);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05), transparent);
+    transition: left 0.6s ease;
+}
+
+.service-card:hover::before {
+    left: 100%;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(37, 99, 235, 0.15);
     border-color: var(--primary-color);
+}
+
+/* Modo oscuro para service cards */
+@media (prefers-color-scheme: dark) {
+    .service-card {
+        background: var(--bg-primary);
+        border: 1px solid var(--bg-accent);
+    }
+    
+    .service-card:hover {
+        box-shadow: 0 15px 35px rgba(37, 99, 235, 0.25);
+        border-color: var(--primary-color);
+    }
+}
+
+.service-card:active {
+    transform: translateY(-4px) scale(1.01);
+    transition: all 0.1s ease;
 }
 
 .service-icon {
@@ -392,11 +640,44 @@ button {
     align-items: center;
     justify-content: center;
     margin-bottom: var(--spacing-lg);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon::before {
+    width: 100px;
+    height: 100px;
+}
+
+.service-card:hover .service-icon {
+    transform: rotate(5deg) scale(1.1);
+    background: linear-gradient(135deg, var(--primary-dark), #1e40af);
 }
 
 .service-icon i {
     font-size: var(--font-size-2xl);
     color: white;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.service-card:hover .service-icon i {
+    transform: scale(1.1);
 }
 
 .service-title {
@@ -554,6 +835,18 @@ button {
     padding: var(--spacing-3xl) 0 var(--spacing-xl);
 }
 
+/* Modo oscuro para footer */
+@media (prefers-color-scheme: dark) {
+    .footer {
+        background: #0f172a;
+        border-top: 1px solid var(--bg-accent);
+    }
+    
+    .footer-bottom {
+        border-top: 1px solid var(--bg-accent);
+    }
+}
+
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -623,35 +916,66 @@ button {
 .whatsapp-btn {
     width: 60px;
     height: 60px;
-    background: var(--whatsapp-color);
+    background: linear-gradient(135deg, var(--whatsapp-color), #22c55e);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-lg);
-    transition: var(--transition-normal);
-    animation: pulse 2s infinite;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: float-whatsapp 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.whatsapp-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-btn:hover::before {
+    transform: scale(1);
 }
 
 .whatsapp-btn:hover {
-    transform: scale(1.1);
-    background: #22c55e;
+    transform: scale(1.15);
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+    animation: none;
+}
+
+.whatsapp-btn:active {
+    transform: scale(1.05);
 }
 
 .whatsapp-btn i {
     font-size: var(--font-size-2xl);
     color: white;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
 }
 
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+.whatsapp-btn:hover i {
+    transform: scale(1.1);
+}
+
+@keyframes float-whatsapp {
+    0%, 100% {
+        transform: translateY(0);
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
     }
-    70% {
-        box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    50% {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
     }
 }
 
@@ -679,16 +1003,40 @@ button {
         justify-content: center;
         transition: var(--transition-normal);
         z-index: 999;
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-xl);
     }
     
     .nav-menu.active {
         left: 0;
     }
     
+    /* Modo oscuro para menú móvil */
+    @media (prefers-color-scheme: dark) {
+        .nav-menu {
+            background: rgba(17, 24, 39, 0.98);
+            backdrop-filter: blur(20px);
+        }
+    }
+    
     .nav-list {
         flex-direction: column;
         gap: var(--spacing-xl);
         text-align: center;
+    }
+    
+    .nav-item {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Remover separador en móvil */
+    .nav-item:nth-last-child(2)::after {
+        display: none;
+    }
+    
+    .nav-item:nth-last-child(2) {
+        margin-right: 0;
     }
     
     .nav-link {
@@ -698,6 +1046,19 @@ button {
     .nav-toggle {
         display: flex;
         z-index: 1001;
+    }
+    
+    /* Botones del navbar en móvil */
+    .nav-btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-size-xs);
+        margin: var(--spacing-xs) 0;
+    }
+    
+    .nav-list .nav-btn {
+        width: auto;
+        min-width: 120px;
+        justify-content: center;
     }
     
     /* Hero móvil */
@@ -789,22 +1150,116 @@ button {
     }
 }
 
+/* Animaciones adicionales para botones */
+@keyframes button-glow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
+    }
+}
+
+@keyframes whatsapp-attention {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    75% {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes service-card-entrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Aplicar animación de entrada a las tarjetas */
+.service-card {
+    animation: service-card-entrance 0.6s ease-out forwards;
+}
+
+.service-card:nth-child(1) { animation-delay: 0.1s; }
+.service-card:nth-child(2) { animation-delay: 0.2s; }
+.service-card:nth-child(3) { animation-delay: 0.3s; }
+.service-card:nth-child(4) { animation-delay: 0.4s; }
+.service-card:nth-child(5) { animation-delay: 0.5s; }
+.service-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Efecto de selección activa para botones */
+.btn.active,
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.btn-whatsapp.active,
+.btn-whatsapp:focus {
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.3);
+}
+
+/* Mejoras para el hover en móvil */
+@media (hover: none) and (pointer: coarse) {
+    .service-card:hover {
+        transform: none;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .btn:hover {
+        transform: none;
+    }
+    
+    .btn:active {
+        transform: scale(0.95);
+    }
+    
+    .service-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Animación de carga para iconos */
+.service-icon {
+    animation: icon-bounce 0.8s ease-out;
+}
+
+@keyframes icon-bounce {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(-90deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
 /* Animaciones adicionales */
 @media (prefers-reduced-motion: no-preference) {
-    .service-card,
     .feature-item,
     .contact-card {
         opacity: 0;
         animation: fadeInUp 0.6s ease-out forwards;
     }
-    
-    .service-card:nth-child(1) { animation-delay: 0.1s; }
-    .service-card:nth-child(2) { animation-delay: 0.2s; }
-    .service-card:nth-child(3) { animation-delay: 0.3s; }
-    .service-card:nth-child(4) { animation-delay: 0.4s; }
-    .service-card:nth-child(5) { animation-delay: 0.5s; }
-    .service-card:nth-child(6) { animation-delay: 0.6s; }
 }
+
 
 @keyframes fadeInUp {
     from {
@@ -817,9 +1272,91 @@ button {
     }
 }
 
+/* Botones del navbar */
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.nav-btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #1e40af);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.nav-btn-outline {
+    background: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.nav-btn-outline:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.nav-btn-whatsapp {
+    background: linear-gradient(135deg, var(--whatsapp-color), #22c55e);
+    color: white;
+    border-color: var(--whatsapp-color);
+}
+
+.nav-btn-whatsapp:hover {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+/* Efectos de ondas para botones del navbar */
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 1;
+}
+
+.nav-btn:active::before {
+    width: 200px;
+    height: 200px;
+}
+
+.nav-btn > *,
+.nav-btn .fas,
+.nav-btn .fab {
+    position: relative;
+    z-index: 2;
+}
+
 /* Estados de focus para accesibilidad */
 .btn:focus,
 .nav-link:focus,
+.nav-btn:focus,
 .contact-link:focus {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
